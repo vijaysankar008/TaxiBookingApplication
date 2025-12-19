@@ -3,10 +3,10 @@ package app.online.ola;
 import java.util.List;
 
 public class Taxi {
-	int id;
-	char intialPoint = 'A';
-	double totalEarnings;
-	List<Booking> bookingList;
+	private int id;
+	private char intialPoint = 'A';
+	private double totalEarnings;
+	private List<Booking> bookingList;
 
 	public Taxi(int id) {
 		this.id = id;
