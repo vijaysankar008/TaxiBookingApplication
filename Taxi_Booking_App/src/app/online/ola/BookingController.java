@@ -1,4 +1,4 @@
-package app;
+package app.online.ola;
 
 public class BookingController {
     
