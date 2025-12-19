@@ -8,6 +8,13 @@ public class Taxi {
 	private double totalEarnings;
 	private List<Booking> bookingList;
 
+	public boolean taxiIsAvailable(int pickUpTime){
+		if(bookingList.isEmpty())
+			return true;
+		Booking lastBooking=bookingList.get(bookingList.size()-1);
+		return lastBooking.dropTime<pickUpTime?true:false;
+	}
+
 	public Taxi(int id) {
 		this.id = id;
 	}
