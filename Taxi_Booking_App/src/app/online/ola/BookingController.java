@@ -46,6 +46,7 @@ public class BookingController {
                            .collect(Collectors.toList());
 
         if(availableTaxis.size()>0){
+            
             Taxi allotedTaxi=availableTaxis.get(0);
             int bookingCharges=allotedTaxi.calculateBookingCharges(pickupLocation,dropLocation);
             int droptime=pickupTime+Math.abs(pickupLocation-dropLocation);
