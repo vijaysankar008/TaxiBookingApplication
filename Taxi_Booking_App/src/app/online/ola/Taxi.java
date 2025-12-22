@@ -9,12 +9,17 @@ public class Taxi {
 	private List<Booking> bookingList;
 
 	public boolean taxiIsAvailable(int pickUpTime){
-		if(bookingList.isEmpty())
+		if(bookingList==null||bookingList.isEmpty())
 			return true;
 		Booking lastBooking=bookingList.get(bookingList.size()-1);
 		return lastBooking.dropTime<pickUpTime?true:false;
 	}
 
+	public int calculateBookingCharges(char pickup,char drop){
+		int totalDistance=Math.abs(pickup-drop)*15;
+		return 100+(totalDistance-5)*10;
+	}
+	
 	public Taxi(int id) {
 		this.id = id;
 	}
