@@ -2,11 +2,11 @@ package app.online.ola;
 
 public class Booking {
 
-	int bookingId, customerId;
-	double pickupTime, dropTime, bookingAmount;
+	int bookingId, customerId,taxiId,pickupTime, dropTime;
+	double  bookingAmount;
 	char pickupPoint, dropPoint;
 
-	public Booking(int bookingId, int customerId, double pickupTime, double dropTime, double bookingAmount,
+	public Booking(int bookingId, int customerId, int pickupTime, int dropTime, double bookingAmount,
 			char pickupPoint, char dropPoint) {
 		this.bookingId = bookingId;
 		this.customerId = customerId;
@@ -37,7 +37,7 @@ public class Booking {
 		return pickupTime;
 	}
 
-	public void setPickupTime(double pickupTime) {
+	public void setPickupTime(int pickupTime) {
 		this.pickupTime = pickupTime;
 	}
 
@@ -45,7 +45,7 @@ public class Booking {
 		return dropTime;
 	}
 
-	public void setDropTime(double dropTime) {
+	public void setDropTime(int dropTime) {
 		this.dropTime = dropTime;
 	}
 
@@ -73,4 +73,20 @@ public class Booking {
 		this.dropPoint = dropPoint;
 	}
 
+	public int getTaxiId() {
+		return taxiId;
+	}
+
+	public void setTaxiId(int taxiId) {
+		this.taxiId = taxiId;
+	}
+
+	@Override
+	public String toString() {
+		return "Booking [bookingId=" + bookingId + ", customerId=" + customerId + ", taxiId=" + taxiId + ", pickupTime="
+				+ pickupTime + ", dropTime=" + dropTime + ", bookingAmount=" + bookingAmount + ", pickupPoint="
+				+ pickupPoint + ", dropPoint=" + dropPoint + "]";
+	}
+	
+	
 }

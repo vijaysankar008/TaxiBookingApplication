@@ -1,12 +1,13 @@
 package app.online.ola;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Taxi {
 	private int id;
 	private char intialPoint = 'A';
 	private double totalEarnings;
-	private List<Booking> bookingList;
+	private List<Booking> bookingList=new ArrayList<>();
 
 	public boolean taxiIsAvailable(int pickUpTime){
 		if(bookingList==null||bookingList.isEmpty())
@@ -18,6 +19,12 @@ public class Taxi {
 	public int calculateBookingCharges(char pickup,char drop){
 		int totalDistance=Math.abs(pickup-drop)*15;
 		return 100+(totalDistance-5)*10;
+	}
+
+	public void addBooking(Booking booking){
+		bookingList.add(booking);
+		totalEarnings+=booking.getBookingAmount();
+		intialPoint=booking.getDropPoint();
 	}
 	
 	public Taxi(int id) {
@@ -56,4 +63,11 @@ public class Taxi {
 		this.bookingList = bookingList;
 	}
 
+	@Override
+	public String toString() {
+		return "Taxi [id=" + id + ", intialPoint=" + intialPoint + ", totalEarnings=" + totalEarnings + ", bookingList="
+				+ bookingList + "]";
+	}
+
+	
 }
