@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 public class BookingController {
     static Scanner userInput=new Scanner(System.in); 
     static List<Taxi> taxisList=new ArrayList<>();
+    static int bookingId=1;
+    static int customerId=1;
 
     public static void main(String[] args) {
         
@@ -15,6 +17,7 @@ public class BookingController {
         int taxiCount=userInput.nextInt();
         createTaxiList(taxiCount);
         System.out.println("***Welcome to Taxi Booking Application***");
+        while (true) {       
         System.out.println("Select Any Options 1.Taxi Booking");
         
         int selectOption=userInput.nextInt();
@@ -27,6 +30,7 @@ public class BookingController {
             default:
                 break;
         }
+    }
     }
 
     public static void bookTaxi(){
@@ -41,7 +45,18 @@ public class BookingController {
         List<Taxi> availableTaxis=taxisList.stream().filter(taxi->taxi.taxiIsAvailable(pickupTime))
                            .collect(Collectors.toList());
 
-        
+        if(availableTaxis.size()>0){
+            
+            Taxi allotedTaxi=availableTaxis.get(0);
+            int bookingCharges=allotedTaxi.calculateBookingCharges(pickupLocation,dropLocation);
+            int droptime=pickupTime+Math.abs(pickupLocation-dropLocation);
+            Booking booking=new Booking(bookingId++, customerId++, pickupTime, droptime, bookingCharges, pickupLocation, dropLocation);
+            allotedTaxi.addBooking(booking);
+            System.out.println(taxisList);
+        }else{
+            System.out.println("No Taxi Available");
+        }
+
     }
 
     public static void createTaxiList(int count){
