@@ -1,13 +1,14 @@
 package app.online.ola;
 
 public class Booking {
-
+	String name;
 	int bookingId, customerId,taxiId,pickupTime, dropTime;
 	double  bookingAmount;
 	char pickupPoint, dropPoint;
 
-	public Booking(int bookingId, int customerId, int pickupTime, int dropTime, double bookingAmount,
+	public Booking(String name,int bookingId, int customerId, int pickupTime, int dropTime, double bookingAmount,
 			char pickupPoint, char dropPoint) {
+		this.name=name;
 		this.bookingId = bookingId;
 		this.customerId = customerId;
 		this.pickupTime = pickupTime;
@@ -16,7 +17,7 @@ public class Booking {
 		this.pickupPoint = pickupPoint;
 		this.dropPoint = dropPoint;
 	}
-
+	
 	public int getBookingId() {
 		return bookingId;
 	}
@@ -81,12 +82,22 @@ public class Booking {
 		this.taxiId = taxiId;
 	}
 
+		public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return "Booking [bookingId=" + bookingId + ", customerId=" + customerId + ", taxiId=" + taxiId + ", pickupTime="
 				+ pickupTime + ", dropTime=" + dropTime + ", bookingAmount=" + bookingAmount + ", pickupPoint="
 				+ pickupPoint + ", dropPoint=" + dropPoint + "]";
 	}
+
+
 	
 	
 }
