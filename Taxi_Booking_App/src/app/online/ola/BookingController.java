@@ -18,12 +18,16 @@ public class BookingController {
         createTaxiList(taxiCount);
         System.out.println("***Welcome to Taxi Booking Application***");
         while (true) {       
-        System.out.println("Select Any Options 1.Taxi Booking");
+        System.out.println("Select Any Options 1.Taxi Booking  2. View Booking Details");
         
         int selectOption=userInput.nextInt();
         switch (selectOption) {
             case 1:{
                 bookTaxi();
+                break;
+            }
+            case 2:{
+                viewBookingDetails();
                 break;
             }
         
@@ -33,26 +37,52 @@ public class BookingController {
     }
     }
 
+    public static void viewBookingDetails(){
+        System.out.println("Enter Your Booking Id to see the details of Booking...");
+        int bookingId=userInput.nextInt();
+        Booking booking=null;
+        List<Booking> bookingList=null;
+        for(Taxi currTaxi : taxisList){
+            bookingList=currTaxi.getBookingList().stream().filter(b->b.getBookingId()==bookingId).collect(Collectors.toList());
+            if(bookingList!=null && bookingList.size()>0
+        )
+            booking=bookingList.get(0);
+        }
+        System.out.println("Your booking Details....Your Booking Id = "+booking.getBookingId()+"  Your name = "+booking.getName()+"  Your PickUpLocation = "+booking.getPickupPoint());
+
+    }
+
     public static void bookTaxi(){
 
-        System.out.println("Enter the pickup location");
+        System.out.println("Enter Your Name.....");
+        String name=userInput.next();
+        System.out.println("Enter the pickup location....");
         char pickupLocation=userInput.next().charAt(0);
-        System.out.println("Enter the drop location");
+        System.out.println("Enter the drop location.....");
         char dropLocation=userInput.next().charAt(0);
-        System.out.println("Enter the pickup time");
+        System.out.println("Enter the pickup time.....");
         int pickupTime=userInput.nextInt();
 
-        List<Taxi> availableTaxis=taxisList.stream().filter(taxi->taxi.taxiIsAvailable(pickupTime))
-                           .collect(Collectors.toList());
+        int minDistComparator=Integer.MAX_VALUE;
+        double minEarnComparator=Double.MAX_VALUE;
+        Taxi allotedTaxi=null;
+        for(Taxi currentTaxi : taxisList){
+            if(currentTaxi.taxiIsAvailable(pickupTime)){
+                int currTaxidist=Math.abs(currentTaxi.getIntialPoint()-pickupLocation);
+                if(currTaxidist<minDistComparator||currTaxidist==minDistComparator && currentTaxi.getTotalEarnings()<minEarnComparator){
+                    minDistComparator=currTaxidist;
+                    allotedTaxi=currentTaxi;
+                    minEarnComparator=currentTaxi.getTotalEarnings();
+                }
 
-        if(availableTaxis.size()>0){
-            
-            Taxi allotedTaxi=availableTaxis.get(0);
+            }
+        }
+        if(allotedTaxi!=null){
             int bookingCharges=allotedTaxi.calculateBookingCharges(pickupLocation,dropLocation);
             int droptime=pickupTime+Math.abs(pickupLocation-dropLocation);
-            Booking booking=new Booking(bookingId++, customerId++, pickupTime, droptime, bookingCharges, pickupLocation, dropLocation);
+            Booking booking=new Booking(name,bookingId++, customerId++, pickupTime, droptime, bookingCharges, pickupLocation, dropLocation);
             allotedTaxi.addBooking(booking);
-            System.out.println(taxisList);
+            System.out.println("Your Taxi Has been booked Sucessfully ....Your Booking Id = "+booking.getBookingId());
         }else{
             System.out.println("No Taxi Available");
         }
@@ -62,6 +92,8 @@ public class BookingController {
     public static void createTaxiList(int count){
         for(int i=1;i<=count;i++){
             taxisList.add(new Taxi(i));
+            if(i==2)
+                taxisList.get(i-1).setIntialPoint('B');
         }
     }
 }
